@@ -1,4 +1,4 @@
-package com.example.datepicker
+package com.example.datepicker.view
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background

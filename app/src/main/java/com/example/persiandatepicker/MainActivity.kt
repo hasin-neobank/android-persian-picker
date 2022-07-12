@@ -10,7 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.datepicker.ListItemPicker
+import com.example.datepicker.view.ListItemPicker
 import com.example.persiandatepicker.ui.theme.PersianDatePickerTheme
 
 class MainActivity : ComponentActivity() {
