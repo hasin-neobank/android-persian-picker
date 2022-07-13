@@ -21,14 +21,6 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background) {
-                    val possibleValues = listOf("فروردین", "اردیبهشت" , "خرداد" , "تیر", "مرداد")
-                    var state by remember { mutableStateOf(possibleValues[0]) }
-                    ListItemPicker(
-                        label = { it },
-                        value = state,
-                        onValueChange = { state = it },
-                        list = possibleValues
-                    )
 
                 }
             }
@@ -48,3 +40,4 @@ fun DefaultPreview() {
         Greeting("Android")
     }
 }
+
