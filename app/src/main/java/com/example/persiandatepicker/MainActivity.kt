@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.datepicker.view.ListItemPicker
+import com.example.datepicker.view.PersianDatePicker
 import com.example.persiandatepicker.ui.theme.PersianDatePickerTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,9 +20,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             PersianDatePickerTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background) {
-
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    PersianDatePicker(
+                        buttonText = "تایید"
+                    )
                 }
             }
         }
