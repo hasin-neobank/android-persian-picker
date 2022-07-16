@@ -17,22 +17,19 @@ import com.example.datepicker.utils.bottomSheetSymbolWidth
 import com.example.datepicker.utils.inActiveInputBorderColor
 
 
-class PersianDatePicker (
-    private val preSelectedMonth: Int = 0,
-    private val preSelectedYear: Int = 0,
-    private val preSelectedDay: Int = 0,
-    private val yearRange: Int = 100,
+class PersianDatePicker(
+    preSelectedMonth: Int = 0,
+    preSelectedYear: Int = 0,
+    preSelectedDay: Int = 0,
+    yearRange: Int = 100,
     val selectorColor: Color = Color(0xFFECEEF1),
     val buttonText: String,
     val onButtonPressed: (persianDate: PersianPickerDate) -> Unit,
-    val buttonTextStyle: TextStyle? = null,
-    val selectedTextStyle: TextStyle? = null,
-    val  unSelectedTextStyle: TextStyle? = null,
     private val minAge: Int = 18,
 ) {
     private val persianDate: PersianPickerDate = PersianDateImpl()
-    private var minYear = persianDate.persianYear- (minAge) - yearRange
-    private val maxYear = persianDate.persianYear- (minAge)
+    private var minYear = persianDate.persianYear - (minAge) - yearRange
+    private val maxYear = persianDate.persianYear - (minAge)
     private val maxMonth = persianDate.persianMonth
     private val maxDay = persianDate.persianDay
     private var selectedYear by mutableStateOf(preSelectedYear)
@@ -49,6 +46,7 @@ class PersianDatePicker (
     var maxSelectableDay by mutableStateOf(maxDay)
     var daySelectableRange by
     mutableStateOf((1..maxSelectableDay).toList())
+
     fun initValues() {
         persianDate.setDate(
             persianDate.persianYear - (minAge),
@@ -70,6 +68,9 @@ class PersianDatePicker (
     //start UI code
     @Composable
     fun DatePickerUI(
+        buttonTextStyle: TextStyle,
+        selectedTextStyle: TextStyle,
+        unSelectedTextStyle: TextStyle,
     ) {
 
         val monthNames = listOf(
@@ -104,31 +105,38 @@ class PersianDatePicker (
                     label = { it.toString() },
                     value = selectedDay,
                     onValueChange = {
-                        onDateChanged(selectedYear , selectedMonth , it)
+                        onDateChanged(selectedYear, selectedMonth, it)
                     },
-                    list = daySelectableRange
+                    list = daySelectableRange, selectedTextStyle = selectedTextStyle,
+                    unSelectedTextStyle = unSelectedTextStyle
                 )
                 ListItemPicker(
                     label = { monthNames[it - 1] },
                     value = selectedMonth,
                     onValueChange = {
-                        onDateChanged(selectedYear , it , selectedDay)
+                        onDateChanged(selectedYear, it, selectedDay)
                     },
-                    list = monthSelectableRange
+                    list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
+                    unSelectedTextStyle = unSelectedTextStyle
                 )
                 ListItemPicker(
                     label = { it.toString() },
                     value = selectedYear,
                     onValueChange = {
 
-                        onDateChanged(it , selectedMonth , selectedDay)
+                        onDateChanged(it, selectedMonth, selectedDay)
 
                     },
-                    list = yearSelectableRange
+                    list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
+                    unSelectedTextStyle = unSelectedTextStyle
                 )
 
             }
-            CustomButton(text = buttonText, onClick = { onButtonPressed(persianDate) })
+            CustomButton(
+                text = buttonText,
+                onClick = { onButtonPressed(persianDate) },
+                enableContentStyle = buttonTextStyle
+            )
         }
 
     }

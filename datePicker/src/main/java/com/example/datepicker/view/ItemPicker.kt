@@ -45,6 +45,8 @@ fun <T> ListItemPicker(
     onValueChange: (T) -> Unit,
     dividersColor: Color = MaterialTheme.colors.primary,
     list: List<T>,
+    selectedTextStyle: TextStyle ,
+    unSelectedTextStyle: TextStyle ,
     textStyle: TextStyle = LocalTextStyle.current,
     topLeftRadius: Double = 0.0,
     topRightRadius: Double = 0.0,
@@ -140,6 +142,7 @@ fun <T> ListItemPicker(
                                         coercedAnimatedOffset / halfNumbersColumnHeightPx
                                     )
                                 )
+                        , style = unSelectedTextStyle
                         )
                     Label(
                         text = label(list.elementAt(indexOfElement)),
@@ -150,6 +153,7 @@ fun <T> ListItemPicker(
                                     1 - abs(coercedAnimatedOffset) / halfNumbersColumnHeightPx
                                 ))
                             )
+                        , style = selectedTextStyle
                     )
                     if (indexOfElement < list.count() - 1)
                         Label(
@@ -162,8 +166,10 @@ fun <T> ListItemPicker(
                                         -coercedAnimatedOffset / halfNumbersColumnHeightPx
                                     )
                                 )
+                            , style = unSelectedTextStyle
                         )
-                }
+            }
+
             }
             Box(
                 modifier
@@ -209,7 +215,7 @@ fun <T> ListItemPicker(
 }
 
 @Composable
-private fun Label(text: String, modifier: Modifier) {
+private fun Label(text: String, modifier: Modifier , style: TextStyle) {
     Text(
         modifier = modifier.pointerInput(Unit) {
             detectTapGestures(onLongPress = {
@@ -218,6 +224,7 @@ private fun Label(text: String, modifier: Modifier) {
         },
         text = text,
         textAlign = TextAlign.Center,
+        style = style
     )
 }
 
