@@ -17,6 +17,11 @@ import com.example.persiandatepicker.ui.theme.PersianDatePickerTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val picker = PersianDatePicker(
+            buttonText = "تایید",
+            onButtonPressed = { date -> println("current persian date: ${date.persianYear}/${date.persianMonth}/${date.persianDay}") }
+        )
+        picker.initValues()
         setContent {
             PersianDatePickerTheme {
                 // A surface container using the 'background' color from the theme
@@ -24,9 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    PersianDatePicker(
-                        buttonText = "تایید"
-                    )
+                    picker.DatePickerUI()
                 }
             }
         }
