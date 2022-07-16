@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 import com.example.datepicker.api.PersianPickerDate
 import com.example.datepicker.date.PersianDateImpl
 import com.example.datepicker.utils.bottomSheetSymbolHeight
@@ -99,39 +100,50 @@ class PersianDatePicker(
                     .clip(shape = RoundedCornerShape(bottomSheetSymbolRadius))
                     .background(color = inActiveInputBorderColor),
             )
-            Row() {
-
-                ListItemPicker(
-                    label = { it.toString() },
-                    value = selectedDay,
-                    onValueChange = {
-                        onDateChanged(selectedYear, selectedMonth, it)
-                    },
-                    list = daySelectableRange, selectedTextStyle = selectedTextStyle,
-                    unSelectedTextStyle = unSelectedTextStyle
+            Spacer(modifier = Modifier.height(40.dp))
+            Box(contentAlignment = Alignment.Center , modifier = Modifier.fillMaxWidth()) {
+                Box(
+                    modifier = Modifier
+                        .background(color = selectorColor)
+                        .clip(RoundedCornerShape(12.dp))
+                        .fillMaxWidth()
                 )
-                ListItemPicker(
-                    label = { monthNames[it - 1] },
-                    value = selectedMonth,
-                    onValueChange = {
-                        onDateChanged(selectedYear, it, selectedDay)
-                    },
-                    list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
-                    unSelectedTextStyle = unSelectedTextStyle
-                )
-                ListItemPicker(
-                    label = { it.toString() },
-                    value = selectedYear,
-                    onValueChange = {
+                Row() {
+                    ListItemPicker(
+                        label = { it.toString() },
+                        value = selectedYear,
+                        onValueChange = {
 
-                        onDateChanged(it, selectedMonth, selectedDay)
+                            onDateChanged(it, selectedMonth, selectedDay)
 
-                    },
-                    list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
-                    unSelectedTextStyle = unSelectedTextStyle
-                )
+                        },
+                        list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
+                        unSelectedTextStyle = unSelectedTextStyle
+                    )
+                    ListItemPicker(
+                        label = { monthNames[it - 1] },
+                        value = selectedMonth,
+                        onValueChange = {
+                            onDateChanged(selectedYear, it, selectedDay)
+                        },
+                        list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
+                        unSelectedTextStyle = unSelectedTextStyle
+                    )
+                    ListItemPicker(
+                        label = { it.toString() },
+                        value = selectedDay,
+                        onValueChange = {
+                            onDateChanged(selectedYear, selectedMonth, it)
+                        },
+                        list = daySelectableRange, selectedTextStyle = selectedTextStyle,
+                        unSelectedTextStyle = unSelectedTextStyle
+                    )
+
+                }
 
             }
+
+            Spacer(modifier = Modifier.height(40.dp))
             CustomButton(
                 text = buttonText,
                 onClick = { onButtonPressed(persianDate) },

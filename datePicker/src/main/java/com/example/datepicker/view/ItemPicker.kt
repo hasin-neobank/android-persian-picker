@@ -52,6 +52,7 @@ fun <T> ListItemPicker(
     topRightRadius: Double = 0.0,
     bottomLeftRadius: Double = 0.0,
     bottomRightRadius: Double = 0.0,
+
 ) {
     val minimumAlpha = 0.6f
     val verticalMargin = 8.dp
