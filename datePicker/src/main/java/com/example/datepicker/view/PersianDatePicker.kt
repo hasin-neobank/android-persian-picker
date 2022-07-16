@@ -20,25 +20,19 @@ import java.util.*
 
 @Composable
 fun PersianDatePicker(
-
     preSelectedMonth: Int = 0,
     preSelectedYear: Int = 0,
     preSelectedDay: Int = 0,
     displayMonthNames: Boolean = false,
-    mListener: DatePicker.OnDateChangedListener? = null,
-    maxYear: Int = 0,
-    maxMonth: Int = 0,
-    maxDay: Int = 0,
     yearRange: Int = 100,
     selectorColor: Color = Color(0xFFECEEF1),
     buttonText: String,
+    onButtonPressed: (persianDate:PersianPickerDate )->Unit,
     buttonTextStyle: TextStyle? = null,
     selectedTextStyle: TextStyle? = null,
     unSelectedTextStyle: TextStyle? = null,
     minAge: Int = 18,
 ) {
-
-
     val dateInstance = Date()
     val cal: Calendar = Calendar.getInstance()
     cal.time = dateInstance
@@ -51,44 +45,35 @@ fun PersianDatePicker(
     var selectedYear by remember {
         mutableStateOf(preSelectedYear)
     }
-    if(selectedYear==0){
+    if (selectedYear == 0) {
         selectedYear = persianDate.persianYear
     }
     var selectedMonth by remember {
         mutableStateOf(preSelectedMonth)
     }
-    if(selectedMonth==0){
+    if (selectedMonth == 0) {
         selectedMonth = currentMonth
     }
     var selectedDay by remember {
         mutableStateOf(preSelectedDay)
     }
-    if(selectedDay==0){
+    if (selectedDay == 0) {
         selectedDay = currentDay
     }
-    val minYear = persianDate.persianYear-yearRange
+    val minYear = persianDate.persianYear - yearRange
 
+    val maxYear = persianDate.persianYear
+    val maxMonth = persianDate.persianMonth
+    val maxDay = persianDate.persianDay
 
     //start UI code
+
+    val yearRange = sparseListOf(1300..maxYear)
+    var yearState by remember { mutableStateOf(yearRange[0]) }
+    val monthRange = sparseListOf(1..12)
+    var monthState by remember { mutableStateOf(monthRange[0]) }
     val dayRange = sparseListOf(1..31)
     var dayState by remember { mutableStateOf(dayRange[0]) }
-    val yearRange = sparseListOf(1300..1400)
-    var yearState by remember { mutableStateOf(yearRange[0]) }
-    val monthRange = listOf(
-        "فروردین",
-        "اردیبهشت",
-        "خرداد",
-        "تیر",
-        "مرداد",
-        "شهریور",
-        "مهر",
-        "آبان",
-        "آذر",
-        "دی",
-        "بهمن",
-        "اسفند"
-    )
-    var monthState by remember { mutableStateOf(monthRange[0]) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -105,24 +90,70 @@ fun PersianDatePicker(
             ListItemPicker(
                 label = { it.toString() },
                 value = dayState,
-                onValueChange = { dayState = it },
+                onValueChange = {
+                    dayState = if(persianDate.isLeapYear&& monthState==12 && it>29) {
+                        29
+                    }else {
+                        it
+                    }
+                    dayState = if(yearState==maxYear && monthState==maxMonth && it>maxDay) {
+                        maxDay
+                    }else {
+                        it
+                    }
+                    dayState = if(monthState>=7 && it==31) {
+                        30
+                    }else {
+                        it
+                    }
+                    persianDate.setDate(
+                        persianYear = yearState,
+                        persianMonth = monthState,
+                        persianDay = dayState
+                    )
+                },
                 list = dayRange
             )
             ListItemPicker(
-                label = { it.toString() },
+                label = { persianDate.persianMonthName!! },
                 value = monthState,
-                onValueChange = { monthState = it },
+                onValueChange = {
+                    monthState = if(yearState==maxYear&& monthState>maxMonth) {
+                        maxMonth
+                    }else {
+                        it
+                    }
+
+                    persianDate.setDate(
+                        persianYear = yearState,
+                        persianMonth = monthState,
+                        persianDay = dayState
+                    )
+
+                },
                 list = monthRange
             )
             ListItemPicker(
                 label = { it.toString() },
                 value = yearState,
-                onValueChange = { yearState = it },
+                onValueChange = {
+
+                    yearState = if(yearState>maxYear) {
+                        maxYear
+                    }else {
+                        it
+                    }
+                    persianDate.setDate(
+                        persianYear = yearState,
+                        persianMonth = monthState,
+                        persianDay = dayState
+                    )
+                },
                 list = yearRange
             )
 
         }
-        CustomButton(text = buttonText, onClick = {})
+        CustomButton(text = buttonText, onClick = {onButtonPressed(persianDate)})
     }
 
 }
