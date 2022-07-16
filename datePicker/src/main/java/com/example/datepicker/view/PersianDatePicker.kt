@@ -8,33 +8,68 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
 import com.example.datepicker.api.PersianPickerDate
-import com.example.datepicker.utils.*
+import com.example.datepicker.date.PersianDateImpl
+import com.example.datepicker.utils.bottomSheetSymbolHeight
+import com.example.datepicker.utils.bottomSheetSymbolRadius
+import com.example.datepicker.utils.bottomSheetSymbolWidth
+import com.example.datepicker.utils.inActiveInputBorderColor
+import java.util.*
 
 @Composable
 fun PersianDatePicker(
-    persianDate: PersianPickerDate? = null,
-    selectedMonth: Int = 0,
-    selectedYear: Int = 0,
-    selectedDay: Int = 0,
+
+    preSelectedMonth: Int = 0,
+    preSelectedYear: Int = 0,
+    preSelectedDay: Int = 0,
     displayMonthNames: Boolean = false,
     mListener: DatePicker.OnDateChangedListener? = null,
-    minYear: Int = 0,
     maxYear: Int = 0,
     maxMonth: Int = 0,
     maxDay: Int = 0,
-    displayDescription: Boolean = false,
     yearRange: Int = 100,
     selectorColor: Color = Color(0xFFECEEF1),
     buttonText: String,
     buttonTextStyle: TextStyle? = null,
     selectedTextStyle: TextStyle? = null,
     unSelectedTextStyle: TextStyle? = null,
+    minAge: Int = 18,
 ) {
+
+
+    val dateInstance = Date()
+    val cal: Calendar = Calendar.getInstance()
+    cal.time = dateInstance
+    cal.add(Calendar.YEAR, -(minAge))
+    val dateBeforeMinAgeYears: Date = cal.time
+    val persianDate: PersianPickerDate = PersianDateImpl()
+    persianDate.setDate(dateBeforeMinAgeYears)
+    val currentDay = persianDate.persianDay
+    val currentMonth = persianDate.persianMonth
+    var selectedYear by remember {
+        mutableStateOf(preSelectedYear)
+    }
+    if(selectedYear==0){
+        selectedYear = persianDate.persianYear
+    }
+    var selectedMonth by remember {
+        mutableStateOf(preSelectedMonth)
+    }
+    if(selectedMonth==0){
+        selectedMonth = currentMonth
+    }
+    var selectedDay by remember {
+        mutableStateOf(preSelectedDay)
+    }
+    if(selectedDay==0){
+        selectedDay = currentDay
+    }
+    val minYear = persianDate.persianYear-yearRange
+
+
+    //start UI code
     val dayRange = sparseListOf(1..31)
     var dayState by remember { mutableStateOf(dayRange[0]) }
     val yearRange = sparseListOf(1300..1400)
