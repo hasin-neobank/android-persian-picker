@@ -16,6 +16,7 @@ import com.example.datepicker.utils.bottomSheetSymbolHeight
 import com.example.datepicker.utils.bottomSheetSymbolRadius
 import com.example.datepicker.utils.bottomSheetSymbolWidth
 import com.example.datepicker.utils.inActiveInputBorderColor
+import java.util.*
 
 
 class PersianDatePicker(
@@ -24,8 +25,7 @@ class PersianDatePicker(
     preSelectedDay: Int = 0,
     yearRange: Int = 100,
     val selectorColor: Color = Color(0xFFECEEF1),
-    val buttonText: String,
-    val onButtonPressed: (persianDate: PersianPickerDate) -> Unit,
+
     private val minAge: Int = 18,
 ) {
     private val persianDate: PersianPickerDate = PersianDateImpl()
@@ -72,6 +72,8 @@ class PersianDatePicker(
         buttonTextStyle: TextStyle,
         selectedTextStyle: TextStyle,
         unSelectedTextStyle: TextStyle,
+         buttonText: String,
+         onButtonPressed: (persianDate: PersianPickerDate) -> Unit,
     ) {
 
         val monthNames = listOf(

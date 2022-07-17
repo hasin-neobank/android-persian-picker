@@ -48,10 +48,7 @@ fun <T> ListItemPicker(
     selectedTextStyle: TextStyle,
     unSelectedTextStyle: TextStyle,
     textStyle: TextStyle = LocalTextStyle.current,
-    topLeftRadius: Double = 0.0,
-    topRightRadius: Double = 0.0,
-    bottomLeftRadius: Double = 0.0,
-    bottomRightRadius: Double = 0.0,) {
+) {
     val minimumAlpha = 0.6f
     val verticalMargin = 8.dp
     val numbersColumnHeight = 100.dp
@@ -115,7 +112,7 @@ fun <T> ListItemPicker(
                     }
                 }
             )
-            .background(color=Color.Transparent)
+            .background(color = Color.Transparent)
         //  .padding(vertical = numbersColumnHeight / 3 + verticalMargin * 2)
         ,
         content = {
