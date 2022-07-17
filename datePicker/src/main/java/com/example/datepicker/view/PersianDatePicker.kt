@@ -92,6 +92,7 @@ class PersianDatePicker(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
+            modifier = Modifier.wrapContentHeight()
         ) {
             Box(
                 modifier = Modifier
@@ -100,35 +101,44 @@ class PersianDatePicker(
                     .clip(shape = RoundedCornerShape(bottomSheetSymbolRadius))
                     .background(color = inActiveInputBorderColor),
             )
-            Spacer(modifier = Modifier.height(40.dp))
-            Box(contentAlignment = Alignment.Center , modifier = Modifier.fillMaxWidth()) {
+            Spacer(modifier = Modifier.height(90.dp))
+            Box(contentAlignment = Alignment.Center , modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
                 Box(
                     modifier = Modifier
-                        .background(color = selectorColor)
-                        .clip(RoundedCornerShape(12.dp))
+                        .background(color = selectorColor,shape = RoundedCornerShape(12.dp))
                         .fillMaxWidth()
+                        .height(50.dp)
+
                 )
                 Row() {
-                    ListItemPicker(
-                        label = { it.toString() },
-                        value = selectedYear,
-                        onValueChange = {
 
-                            onDateChanged(it, selectedMonth, selectedDay)
 
-                        },
-                        list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
-                        unSelectedTextStyle = unSelectedTextStyle
-                    )
-                    ListItemPicker(
-                        label = { monthNames[it - 1] },
-                        value = selectedMonth,
-                        onValueChange = {
-                            onDateChanged(selectedYear, it, selectedDay)
-                        },
-                        list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
-                        unSelectedTextStyle = unSelectedTextStyle
-                    )
+                        ListItemPicker(
+                            label = { it.toString() },
+                            value = selectedYear,
+                            onValueChange = {
+
+                                onDateChanged(it, selectedMonth, selectedDay)
+
+                            },
+                            list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
+                            unSelectedTextStyle = unSelectedTextStyle
+                        )
+
+                    Box(modifier = Modifier.weight(1f)
+                        , contentAlignment = Alignment.Center)
+                    {
+                        ListItemPicker(
+                            label = { monthNames[it - 1] },
+                            value = selectedMonth,
+                            onValueChange = {
+                                onDateChanged(selectedYear, it, selectedDay)
+                            },
+                            list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
+                            unSelectedTextStyle = unSelectedTextStyle
+                        )
+                    }
+
                     ListItemPicker(
                         label = { it.toString() },
                         value = selectedDay,
@@ -143,11 +153,12 @@ class PersianDatePicker(
 
             }
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(90.dp))
             CustomButton(
                 text = buttonText,
                 onClick = { onButtonPressed(persianDate) },
-                enableContentStyle = buttonTextStyle
+                enableContentStyle = buttonTextStyle ,
+                verticalMargin = 0.0
             )
         }
 
