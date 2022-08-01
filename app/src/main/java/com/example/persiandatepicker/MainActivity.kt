@@ -15,6 +15,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.datepicker.view.AlphabetPicker
 import com.example.datepicker.view.ListItemPicker
 import com.example.datepicker.view.PersianDatePicker
 import com.example.persiandatepicker.ui.theme.PersianDatePickerTheme
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
 
             )
         picker.initValues()
+        val alphabet = AlphabetPicker("ج")
         setContent {
             PersianDatePickerTheme {
                 val modalBottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
@@ -42,7 +44,7 @@ class MainActivity : ComponentActivity() {
                 ModalBottomSheetLayout(
                     sheetContent = {
                         Box(modifier = Modifier.padding(top = 16.dp , bottom = 24.dp)){
-                        picker.DatePickerUI(
+                            alphabet.AlphabetPickerUI(
                             buttonTextStyle = MaterialTheme.typography.h3,
                             selectedTextStyle = MaterialTheme.typography.h3.copy(
                                 color = TextBlack,
@@ -53,8 +55,8 @@ class MainActivity : ComponentActivity() {
                                 fontWeight = FontWeight.Normal
                             ),
                             buttonText = "تایید",
-                            onButtonPressed = { date ->
-                                result= "current persian date: ${date.persianYear}/${date.persianMonth}/${date.persianDay}"
+                            onButtonPressed = { alphabet ->
+                                result= "current alphabet is: $alphabet"
                             },
                         )}
                     },

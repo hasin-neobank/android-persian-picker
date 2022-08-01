@@ -24,10 +24,8 @@ class PersianDatePicker(
     preSelectedYear: Int = 0,
     preSelectedDay: Int = 0,
     yearRange: Int = 100,
-    val selectorColor: Color = Color(0xFFECEEF1),
-
     private val minAge: Int = 18,
-) {
+){
     private val persianDate: PersianPickerDate = PersianDateImpl()
     private var minYear = persianDate.persianYear - (minAge) - yearRange
     private val maxYear = persianDate.persianYear - (minAge)
@@ -74,6 +72,7 @@ class PersianDatePicker(
         unSelectedTextStyle: TextStyle,
          buttonText: String,
          onButtonPressed: (persianDate: PersianPickerDate) -> Unit,
+        selectorColor: Color = Color(0xFFECEEF1),
     ) {
 
         val monthNames = listOf(

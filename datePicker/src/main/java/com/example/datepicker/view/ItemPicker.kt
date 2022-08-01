@@ -48,10 +48,11 @@ fun <T> ListItemPicker(
     selectedTextStyle: TextStyle,
     unSelectedTextStyle: TextStyle,
     textStyle: TextStyle = LocalTextStyle.current,
+    columnHeight : Int  = 100
 ) {
     val minimumAlpha = 0.6f
     val verticalMargin = 8.dp
-    val numbersColumnHeight = 100.dp
+    val numbersColumnHeight = columnHeight.dp
     val halfNumbersColumnHeight = numbersColumnHeight / 2
     val halfNumbersColumnHeightPx = with(LocalDensity.current) { halfNumbersColumnHeight.toPx() }
 
