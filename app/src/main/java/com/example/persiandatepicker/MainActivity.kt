@@ -11,15 +11,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.datepicker.view.ListItemPicker
+import com.example.datepicker.utils.*
+import com.example.datepicker.view.AlphabetPicker
 import com.example.datepicker.view.PersianDatePicker
 import com.example.persiandatepicker.ui.theme.PersianDatePickerTheme
 import com.example.persiandatepicker.ui.theme.TextBlack
-import com.example.persiandatepicker.ui.theme.TextMediumGray
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -31,14 +29,15 @@ class MainActivity : ComponentActivity() {
         picker.initValues()
         setContent {
             PersianDatePickerTheme {
-                val modalBottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+                val modalBottomSheetState =
+                    rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
                 val scope = rememberCoroutineScope()
-                 var result by remember {
-                     mutableStateOf("Open Modal Bottom Sheet Layout")
-                 }
+                var result by remember {
+                    mutableStateOf("Open Modal Bottom Sheet Layout")
+                }
                 ModalBottomSheetLayout(
                     sheetContent = {
-                        Box(modifier = Modifier.padding(top = 16.dp , bottom = 24.dp)){
+                        Box(modifier = Modifier.padding(top = 16.dp, bottom = 24.dp)) {
                         picker.DatePickerUI(
                             buttonTextStyle = MaterialTheme.typography.h3,
                             selectedTextStyle = MaterialTheme.typography.h3.copy(
@@ -53,7 +52,8 @@ class MainActivity : ComponentActivity() {
                             onButtonPressed = { date ->
                                 result= "current persian date: ${date.persianYear}/${date.persianMonth}/${date.persianDay}"
                             },
-                        )}
+                        )
+                        }
                     },
                     sheetState = modalBottomSheetState,
                     sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         backgroundColor = Color.White
                     ) {
-                        MainScreen(scope = scope, state = modalBottomSheetState , result)
+                        MainScreen(scope = scope, state = modalBottomSheetState, result)
                     }
                 }
             }
@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MainScreen(scope: CoroutineScope, state: ModalBottomSheetState , text:String) {
+fun MainScreen(scope: CoroutineScope, state: ModalBottomSheetState, text: String) {
     Column(
         Modifier
             .fillMaxSize()
@@ -91,7 +91,7 @@ fun MainScreen(scope: CoroutineScope, state: ModalBottomSheetState , text:String
                     state.show()
                 }
             }) {
-            Text(text =text )
+            Text(text = text)
         }
     }
 }

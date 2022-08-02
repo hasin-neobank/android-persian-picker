@@ -47,12 +47,11 @@ fun <T> ListItemPicker(
     list: List<T>,
     selectedTextStyle: TextStyle,
     unSelectedTextStyle: TextStyle,
-    textStyle: TextStyle = LocalTextStyle.current,
-    columnHeight : Int  = 100
+    textStyle: TextStyle = LocalTextStyle.current.copy(color = Color.Black),
 ) {
-    val minimumAlpha = 0.6f
+    val minimumAlpha = 0.3f
     val verticalMargin = 8.dp
-    val numbersColumnHeight = columnHeight.dp
+    val numbersColumnHeight = 80.dp
     val halfNumbersColumnHeight = numbersColumnHeight / 2
     val halfNumbersColumnHeightPx = with(LocalDensity.current) { halfNumbersColumnHeight.toPx() }
 
@@ -70,8 +69,7 @@ fun <T> ListItemPicker(
 
     val coercedAnimatedOffset = animatedOffset.value % halfNumbersColumnHeightPx
 
-    val indexOfElement =
-        getItemIndexForOffset(list, value, animatedOffset.value, halfNumbersColumnHeightPx)
+    val indexOfElement = getItemIndexForOffset(list, value, animatedOffset.value, halfNumbersColumnHeightPx)
 
     var dividersWidth by remember { mutableStateOf(0.dp) }
 
@@ -92,15 +90,9 @@ fun <T> ListItemPicker(
                             adjustTarget = { target ->
                                 val coercedTarget = target % halfNumbersColumnHeightPx
                                 val coercedAnchors =
-                                    listOf(
-                                        -halfNumbersColumnHeightPx,
-                                        0f,
-                                        halfNumbersColumnHeightPx
-                                    )
-                                val coercedPoint =
-                                    coercedAnchors.minByOrNull { abs(it - coercedTarget) }!!
-                                val base =
-                                    halfNumbersColumnHeightPx * (target / halfNumbersColumnHeightPx).toInt()
+                                    listOf(-halfNumbersColumnHeightPx, 0f, halfNumbersColumnHeightPx)
+                                val coercedPoint = coercedAnchors.minByOrNull { abs(it - coercedTarget) }!!
+                                val base = halfNumbersColumnHeightPx * (target / halfNumbersColumnHeightPx).toInt()
                                 coercedPoint + base
                             }
                         ).endState.value
@@ -113,9 +105,7 @@ fun <T> ListItemPicker(
                     }
                 }
             )
-            .background(color = Color.Transparent)
-        //  .padding(vertical = numbersColumnHeight / 3 + verticalMargin * 2)
-        ,
+            .padding(vertical = numbersColumnHeight / 3 + verticalMargin * 2),
         content = {
             Box(
                 modifier
@@ -135,12 +125,9 @@ fun <T> ListItemPicker(
                             text = label(list.elementAt(indexOfElement - 1)),
                             modifier = baseLabelModifier
                                 .offset(y = -halfNumbersColumnHeight)
-                                .alpha(
-                                    maxOf(
-                                        minimumAlpha,
-                                        coercedAnimatedOffset / halfNumbersColumnHeightPx
-                                    )
-                                ), style = unSelectedTextStyle
+                                .alpha(maxOf(minimumAlpha, coercedAnimatedOffset / halfNumbersColumnHeightPx)),
+                            style = unSelectedTextStyle
+
                         )
                     Label(
                         text = label(list.elementAt(indexOfElement)),
@@ -150,22 +137,18 @@ fun <T> ListItemPicker(
                                     minimumAlpha,
                                     1 - abs(coercedAnimatedOffset) / halfNumbersColumnHeightPx
                                 ))
-                            ), style = selectedTextStyle
+                            ),
+                        style = selectedTextStyle
                     )
                     if (indexOfElement < list.count() - 1)
                         Label(
                             text = label(list.elementAt(indexOfElement + 1)),
                             modifier = baseLabelModifier
                                 .offset(y = halfNumbersColumnHeight)
-                                .alpha(
-                                    maxOf(
-                                        minimumAlpha,
-                                        -coercedAnimatedOffset / halfNumbersColumnHeightPx
-                                    )
-                                ), style = unSelectedTextStyle
+                                .alpha(maxOf(minimumAlpha, -coercedAnimatedOffset / halfNumbersColumnHeightPx)),
+                            style = unSelectedTextStyle
                         )
                 }
-
             }
             Box(
                 modifier

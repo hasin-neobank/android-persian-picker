@@ -81,7 +81,7 @@ class AlphabetPicker(
                     .clip(shape = RoundedCornerShape(bottomSheetSymbolRadius))
                     .background(color = inActiveInputBorderColor),
             )
-            Spacer(modifier = Modifier.height(90.dp))
+            Spacer(modifier = Modifier.height(40.dp))
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -92,7 +92,7 @@ class AlphabetPicker(
                     modifier = Modifier
                         .background(color = selectorColor, shape = RoundedCornerShape(12.dp))
                         .fillMaxWidth()
-                        .height(50.dp)
+                        .height(48.dp)
 
                 )
                 Row() {
@@ -119,7 +119,7 @@ class AlphabetPicker(
 
             }
 
-            Spacer(modifier = Modifier.height(90.dp))
+            Spacer(modifier = Modifier.height(40.dp))
             CustomButton(
                 text = buttonText,
                 onClick = { onButtonPressed(selectedAlphabet) },
