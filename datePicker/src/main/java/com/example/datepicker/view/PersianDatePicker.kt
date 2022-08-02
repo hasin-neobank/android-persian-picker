@@ -3,11 +3,13 @@ package com.example.datepicker.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.example.datepicker.api.PersianPickerDate
@@ -16,8 +18,6 @@ import com.example.datepicker.utils.bottomSheetSymbolHeight
 import com.example.datepicker.utils.bottomSheetSymbolRadius
 import com.example.datepicker.utils.bottomSheetSymbolWidth
 import com.example.datepicker.utils.inActiveInputBorderColor
-import java.util.*
-
 
 class PersianDatePicker(
     preSelectedMonth: Int = 0,
@@ -89,29 +89,28 @@ class PersianDatePicker(
             "بهمن",
             "اسفند"
         )
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.wrapContentHeight()
-        ) {
-            Box(
-                modifier = Modifier
-                    .height(bottomSheetSymbolHeight)
-                    .width(bottomSheetSymbolWidth)
-                    .clip(shape = RoundedCornerShape(bottomSheetSymbolRadius))
-                    .background(color = inActiveInputBorderColor),
-            )
-            Spacer(modifier = Modifier.height(90.dp))
-            Box(contentAlignment = Alignment.Center , modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+               // modifier = Modifier.wrapContentHeight()
+            ) {
                 Box(
                     modifier = Modifier
-                        .background(color = selectorColor,shape = RoundedCornerShape(12.dp))
-                        .fillMaxWidth()
-                        .height(50.dp)
-
+                        .height(bottomSheetSymbolHeight)
+                        .width(bottomSheetSymbolWidth)
+                        .clip(shape = RoundedCornerShape(bottomSheetSymbolRadius))
+                        .background(color = inActiveInputBorderColor),
                 )
-                Row() {
+                Spacer(modifier = Modifier.height(90.dp))
+                Box(contentAlignment = Alignment.Center , modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .background(color = selectorColor,shape = RoundedCornerShape(12.dp))
+                            .fillMaxWidth()
+                            .height(50.dp)
+
+                    )
+                    Row() {
 
 
                         ListItemPicker(
@@ -126,43 +125,42 @@ class PersianDatePicker(
                             unSelectedTextStyle = unSelectedTextStyle
                         )
 
-                    Box(modifier = Modifier.weight(1f)
-                        , contentAlignment = Alignment.Center)
-                    {
+                        Box(modifier = Modifier.weight(1f)
+                            , contentAlignment = Alignment.Center)
+                        {
+                            ListItemPicker(
+                                label = { monthNames[it - 1] },
+                                value = selectedMonth,
+                                onValueChange = {
+                                    onDateChanged(selectedYear, it, selectedDay)
+                                },
+                                list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
+                                unSelectedTextStyle = unSelectedTextStyle
+                            )
+                        }
+
                         ListItemPicker(
-                            label = { monthNames[it - 1] },
-                            value = selectedMonth,
+                            label = { it.toString() },
+                            value = selectedDay,
                             onValueChange = {
-                                onDateChanged(selectedYear, it, selectedDay)
+                                onDateChanged(selectedYear, selectedMonth, it)
                             },
-                            list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
+                            list = daySelectableRange, selectedTextStyle = selectedTextStyle,
                             unSelectedTextStyle = unSelectedTextStyle
                         )
-                    }
 
-                    ListItemPicker(
-                        label = { it.toString() },
-                        value = selectedDay,
-                        onValueChange = {
-                            onDateChanged(selectedYear, selectedMonth, it)
-                        },
-                        list = daySelectableRange, selectedTextStyle = selectedTextStyle,
-                        unSelectedTextStyle = unSelectedTextStyle
-                    )
+                    }
 
                 }
 
+                Spacer(modifier = Modifier.height(90.dp))
+                CustomButton(
+                    text = buttonText,
+                    onClick = { onButtonPressed(persianDate) },
+                    enableContentStyle = buttonTextStyle ,
+                    verticalMargin = 0.0
+                )
             }
-
-            Spacer(modifier = Modifier.height(90.dp))
-            CustomButton(
-                text = buttonText,
-                onClick = { onButtonPressed(persianDate) },
-                enableContentStyle = buttonTextStyle ,
-                verticalMargin = 0.0
-            )
-        }
-
     }
 
     private fun onDateChanged(
