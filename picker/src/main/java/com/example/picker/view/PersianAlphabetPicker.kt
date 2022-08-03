@@ -18,8 +18,8 @@ import com.example.picker.utils.bottomSheetSymbolRadius
 import com.example.picker.utils.bottomSheetSymbolWidth
 import com.example.picker.utils.inActiveInputBorderColor
 
-class AlphabetPicker(
-    initialAlphabet: String
+class PersianAlphabetPicker(
+    initialAlphabet: String = "الف"
 ) {
 
     private var selectedAlphabet by mutableStateOf(initialAlphabet)
