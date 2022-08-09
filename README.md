@@ -34,7 +34,8 @@ val picker = PersianDatePicker()
 //alphabet picker
 val picker = PersianAlphabetPicker()
 ```
-Set `picker.DatePickerUI` or `picker.AlphabetPickerUI` as content to `ModalBottomSheetLayout` 
+Set `picker.DatePickerUI` or `picker.AlphabetPickerUI` as content to `ModalBottomSheetLayout`:
+
 ```kotlin
 picker.DatePickerUI(
     buttonTextStyle = MaterialTheme.typography.h3,
@@ -52,6 +53,25 @@ picker.DatePickerUI(
     },
 )
 ```
+
+```kotlin
+picker.AlphabetPickerUI(
+    buttonTextStyle = MaterialTheme.typography.h3,
+    selectedTextStyle = MaterialTheme.typography.h3.copy(
+        color = TextBlack,
+        fontWeight = FontWeight.Normal
+    ),
+    unSelectedTextStyle = MaterialTheme.typography.h3.copy(
+        color = TextMediumGray,
+        fontWeight = FontWeight.Normal
+    ),
+    buttonText = "تایید",
+    onButtonPressed = { alphabet ->
+        result= "current persian date: $alphabet"
+    },
+)
+```
+
 <img src="https://user-images.githubusercontent.com/67331684/182156346-47f02adb-b968-47db-bee7-5e0f96c80152.jpg" width="300"> <img src="https://user-images.githubusercontent.com/67331684/182156523-80404675-cb03-47f6-9a29-c06ec47cd4c4.jpg" width="300">
 
 **Note:** see [Example](app/src/main/java/com/example/picker/MainActivity.kt) for more detail.
