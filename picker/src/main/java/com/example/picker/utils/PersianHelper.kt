@@ -1,5 +1,7 @@
 package com.example.picker.utils
-
+/**
+ * Thanks to <a href="https://github.com/aliab/Persian-Date-Picker-Dialog">Persian Date Picker Project</>
+ */
 object PersianHelper {
     private val persianNumbers = charArrayOf('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹')
     private val englishNumbers = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')

@@ -2,7 +2,9 @@ package com.example.picker.utils
 
 import com.example.picker.date.PersianDateImpl
 import java.util.*
-
+/**
+ * Thanks to <a href="https://github.com/aliab/Persian-Date-Picker-Dialog">Persian Date Picker Project</>
+ */
 class PersianCalendar : GregorianCalendar {
     // calculatePersianDate();
     var persianYear = 0

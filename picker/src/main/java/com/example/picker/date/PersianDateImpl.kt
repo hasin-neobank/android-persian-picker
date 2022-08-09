@@ -2,7 +2,9 @@ package com.example.picker.date
 
 import com.example.picker.api.PersianPickerDate
 import java.util.*
-
+/**
+ * Thanks to <a href="https://github.com/aliab/Persian-Date-Picker-Dialog">Persian Date Picker Project</>
+ */
 class PersianDateImpl : PersianPickerDate {
     private var persianDate: PersianDateFixedLeapYear
 

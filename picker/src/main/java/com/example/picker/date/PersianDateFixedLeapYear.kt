@@ -3,7 +3,9 @@ package com.example.picker.date
 import saman.zamani.persiandate.PersianDate
 import java.util.*
 
-
+/**
+ * Thanks to <a href="https://github.com/aliab/Persian-Date-Picker-Dialog">Persian Date Picker Project</>
+ */
 class PersianDateFixedLeapYear : PersianDate {
     private val leapYears = listOf(
         1210, 1214, 1218, 1222, 1226, 1230, 1234, 1238, 1243, 1247, 1251, 1255, 1259, 1263,

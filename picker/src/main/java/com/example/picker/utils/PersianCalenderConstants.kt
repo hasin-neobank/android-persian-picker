@@ -1,5 +1,7 @@
 package com.example.picker.utils
-
+/**
+ * Thanks to <a href="https://github.com/aliab/Persian-Date-Picker-Dialog">Persian Date Picker Project</>
+ */
 object PersianCalendarConstants {
     // 00:00:00 UTC (Gregorian) Julian day 0,
     // 0 milliseconds since 1970-01-01

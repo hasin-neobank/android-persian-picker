@@ -1,5 +1,7 @@
 package com.example.picker.utils
-
+/**
+ * Thanks to <a href="https://github.com/aliab/Persian-Date-Picker-Dialog">Persian Date Picker Project</>
+ */
 object PersianCalendarUtils {
     /**
      * Converts a provided Persian (Shamsi) date to the Julian Day Number (i.e.

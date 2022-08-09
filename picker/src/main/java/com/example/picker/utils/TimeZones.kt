@@ -1,7 +1,9 @@
 package com.example.picker.utils
 
 import java.util.*
-
+/**
+ * Thanks to <a href="https://github.com/aliab/Persian-Date-Picker-Dialog">Persian Date Picker Project</>
+ */
 enum class TimeZones(val timeZone: TimeZone) {
     DEFAULT(TimeZone.getDefault()),  // default JDK 1.4.2 time zones
     ACT(TimeZone.getTimeZone("ACT")), AET(TimeZone.getTimeZone("AET")), AFRICA_ABIDJAN(

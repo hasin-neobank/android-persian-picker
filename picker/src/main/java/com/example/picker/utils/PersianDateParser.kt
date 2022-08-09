@@ -1,7 +1,9 @@
 package com.example.picker.utils
 
 import com.example.picker.date.PersianDateImpl
-
+/**
+ * Thanks to <a href="https://github.com/aliab/Persian-Date-Picker-Dialog">Persian Date Picker Project</>
+ */
 class PersianDateParser
 /**
  * <pre>

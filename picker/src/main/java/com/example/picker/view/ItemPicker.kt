@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.roundToInt
-
+/**
+ * Thanks to <a href="https://github.com/ChargeMap/Compose-NumberPicker">Compose Number Picker Project</>
+ */
 private fun <T> getItemIndexForOffset(
     range: List<T>,
     value: T,

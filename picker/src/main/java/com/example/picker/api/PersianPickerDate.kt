@@ -1,7 +1,9 @@
 package com.example.picker.api
 
 import java.util.*
-
+/**
+ * Thanks to <a href="https://github.com/aliab/Persian-Date-Picker-Dialog">Persian Date Picker Project</>
+ */
 interface PersianPickerDate {
     fun setDate(timestamp: Long?)
     fun setDate(date: Date?)
