@@ -76,7 +76,7 @@ picker.AlphabetPickerUI(
 
 **Note:** see [Example](app/src/main/java/com/example/picker/MainActivity.kt) for more detail.
 
-## CREDITS
+## Credits
 * Special Thanks to [PersianDatePicker](https://github.com/alibehzadian/PersianDatePicker).
 * Special Thanks to [PersianDatePickerDialog](https://github.com/aliab/Persian-Date-Picker-Dialog).
 * Special Thanks to [ComposeNumberPicker](https://github.com/ChargeMap/Compose-NumberPicker).
