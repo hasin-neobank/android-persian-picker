@@ -36,21 +36,22 @@ class MainActivity : ComponentActivity() {
                 ModalBottomSheetLayout(
                     sheetContent = {
                         Box(modifier = Modifier.padding(top = 16.dp, bottom = 24.dp)) {
-                        picker.DatePickerUI(
-                            buttonTextStyle = MaterialTheme.typography.h3,
-                            selectedTextStyle = MaterialTheme.typography.h3.copy(
-                                color = TextBlack,
-                                fontWeight = FontWeight.Normal
-                            ),
-                            unSelectedTextStyle = MaterialTheme.typography.h3.copy(
-                                color = TextMediumGray,
-                                fontWeight = FontWeight.Normal
-                            ),
-                            buttonText = "تایید",
-                            onButtonPressed = { date ->
-                                result= "current persian date: ${date.persianYear}/${date.persianMonth}/${date.persianDay}"
-                            },
-                        )
+                            picker.DatePickerUI(
+                                buttonTextStyle = MaterialTheme.typography.h3,
+                                selectedTextStyle = MaterialTheme.typography.h3.copy(
+                                    color = TextBlack,
+                                    fontWeight = FontWeight.Normal
+                                ),
+                                unSelectedTextStyle = MaterialTheme.typography.h3.copy(
+                                    color = TextMediumGray,
+                                    fontWeight = FontWeight.Normal
+                                ),
+                                buttonText = "تایید",
+                                onButtonPressed = { date ->
+                                    result =
+                                        "current persian date: ${date.persianYear}/${date.persianMonth}/${date.persianDay}"
+                                },
+                            )
                         }
                     },
                     sheetState = modalBottomSheetState,
@@ -61,7 +62,12 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         backgroundColor = Color.White
                     ) {
-                        MainScreen(scope = scope, state = modalBottomSheetState, result)
+                        MainScreen(
+                            scope = scope,
+                            state = modalBottomSheetState,
+                            text = result,
+                            modifier = Modifier.padding(it)
+                        )
                     }
                 }
             }
@@ -71,9 +77,14 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MainScreen(scope: CoroutineScope, state: ModalBottomSheetState, text: String) {
+fun MainScreen(
+    scope: CoroutineScope,
+    state: ModalBottomSheetState,
+    text: String,
+    modifier: Modifier = Modifier
+) {
     Column(
-        Modifier
+        modifier
             .fillMaxSize()
             .background(Color.White),
         verticalArrangement = Arrangement.Center,

@@ -3,12 +3,16 @@ package com.example.picker.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import com.example.picker.api.PersianPickerDate
 import com.example.picker.date.PersianDateImpl
@@ -64,41 +68,79 @@ class PersianDatePicker(
     //start UI code
     @Composable
     fun DatePickerUI(
-        buttonTextStyle: TextStyle,
+        buttonTextStyle: TextStyle? = null,
         selectedTextStyle: TextStyle,
         unSelectedTextStyle: TextStyle,
-        buttonText: String,
-        onButtonPressed: (persianDate: PersianPickerDate) -> Unit,
+        buttonText: String? = null,
+        bottomSheetTopRow: @Composable () -> Unit = {},
+        hasBottomSheetTopSymbol: Boolean = true,
+        currentSelectedDateTextStyle: TextStyle = MaterialTheme.typography.body1,
+        customButton: @Composable ((PersianPickerDate) -> Unit)? = null,
+        showCurrentSelectedDate: Boolean = false,
+        onButtonPressed: (persianDate: PersianPickerDate) -> Unit = {},
         selectorColor: Color = Color(0xFFECEEF1),
     ) {
 
-        val monthNames = listOf(
-            "فروردین",
-            "اردیبهشت",
-            "خرداد",
-            "تیر",
-            "مرداد",
-            "شهریور",
-            "مهر",
-            "آبان",
-            "آذر",
-            "دی",
-            "بهمن",
-            "اسفند"
-        )
+        val monthNames = remember {
+            listOf(
+                "فروردین",
+                "اردیبهشت",
+                "خرداد",
+                "تیر",
+                "مرداد",
+                "شهریور",
+                "مهر",
+                "آبان",
+                "آذر",
+                "دی",
+                "بهمن",
+                "اسفند"
+            )
+        }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            // modifier = Modifier.wrapContentHeight()
+            modifier = Modifier.wrapContentHeight()
         ) {
-            Box(
-                modifier = Modifier
-                    .height(bottomSheetSymbolHeight)
-                    .width(bottomSheetSymbolWidth)
-                    .clip(shape = RoundedCornerShape(bottomSheetSymbolRadius))
-                    .background(color = inActiveInputBorderColor),
-            )
+            if (hasBottomSheetTopSymbol) {
+                Box(
+                    modifier = Modifier
+                        .height(bottomSheetSymbolHeight)
+                        .width(bottomSheetSymbolWidth)
+                        .clip(shape = RoundedCornerShape(bottomSheetSymbolRadius))
+                        .background(color = inActiveInputBorderColor),
+                )
+            }
+            bottomSheetTopRow()
             Spacer(modifier = Modifier.height(40.dp))
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                Row() {
+                    Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = "سال",
+                            style = selectedTextStyle
+                        )
+                    }
+                    Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = "ماه",
+                            style = selectedTextStyle
+                        )
+                    }
+                    Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = "روز",
+                            style = selectedTextStyle
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(24.dp))
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -115,7 +157,8 @@ class PersianDatePicker(
                 Row() {
 
                     Box(
-                        modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = Alignment.Center
                     )
                     {
                         ListItemPicker(
@@ -132,11 +175,12 @@ class PersianDatePicker(
                     }
 
                     Box(
-                        modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = Alignment.Center
                     )
                     {
                         ListItemPicker(
-                            label = { monthNames[it - 1] },
+                            label = { it.toString() },
                             value = selectedMonth,
                             onValueChange = {
                                 onDateChanged(selectedYear, it, selectedDay)
@@ -146,7 +190,8 @@ class PersianDatePicker(
                         )
                     }
                     Box(
-                        modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = Alignment.Center
                     )
                     {
                         ListItemPicker(
@@ -159,18 +204,31 @@ class PersianDatePicker(
                             unSelectedTextStyle = unSelectedTextStyle
                         )
                     }
-
                 }
-
             }
 
-            Spacer(modifier = Modifier.height(40.dp))
-            CustomButton(
-                text = buttonText,
-                onClick = { onButtonPressed(persianDate) },
-                enableContentStyle = buttonTextStyle,
-                verticalMargin = 0.0
-            )
+            if (showCurrentSelectedDate) {
+                Spacer(modifier = Modifier.height(25.dp))
+                Text(
+                    text = "$selectedDay ${monthNames[selectedMonth - 1]} $selectedYear",
+                    style = currentSelectedDateTextStyle.copy(
+                        textDirection = TextDirection.ContentOrRtl
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.height(18.dp))
+
+            if (customButton != null) {
+                customButton(persianDate)
+            } else {
+                CustomButton(
+                    text = buttonText ?: "",
+                    onClick = { onButtonPressed(persianDate) },
+                    enableContentStyle = buttonTextStyle ?: MaterialTheme.typography.body1,
+                    verticalMargin = 0.0
+                )
+            }
         }
     }
 
