@@ -29,7 +29,7 @@ class PersianExpirationDatePicker(
     private val minMonth = persianDate.persianMonth
     private var selectedYear by mutableStateOf(preSelectedYear)
     private var selectedMonth by mutableStateOf(preSelectedMonth)
-    private var selectedDay by mutableStateOf(if(preSelectedMonth<=6) 31 else 30)
+    private var selectedDay by mutableStateOf(if (preSelectedMonth <= 6) 31 else 30)
     private var maxSelectableYear by mutableStateOf(maxYear)
     private var yearSelectableRange by
     mutableStateOf((minYear..maxSelectableYear).toList())
@@ -37,18 +37,19 @@ class PersianExpirationDatePicker(
     private var minSelectableMonth by mutableStateOf(minMonth)
     private var monthSelectableRange
             by mutableStateOf((minSelectableMonth..12).toList())
+
     init {
-        persianDate.setDate(
-            persianDate.persianYear,
-            persianDate.persianMonth,
-            persianDate.persianDay
-        )
         if (selectedYear == 0) {
             selectedYear = minYear
         }
         if (selectedMonth == 0) {
             selectedMonth = minMonth
         }
+        persianDate.setDate(
+            selectedYear,
+            selectedMonth,
+            selectedDay
+        )
     }
 
     //start UI code
@@ -107,17 +108,19 @@ class PersianExpirationDatePicker(
                             unSelectedTextStyle = unSelectedTextStyle
                         )
                     }
+                    Spacer(modifier = Modifier.width(12.dp))
                     Box(
                         contentAlignment = Alignment.Center
                     ) {
                         Text("/", style = selectedTextStyle)
                     }
+                    Spacer(modifier = Modifier.width(12.dp))
                     Box(
                         modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart,
                     )
                     {
                         ListItemPicker(
-                            label = {if(it<10)"0${it}" else it.toString()  },
+                            label = { if (it < 10) "0${it}" else it.toString() },
                             value = selectedMonth,
                             onValueChange = {
                                 onDateChanged(selectedYear, it)
@@ -149,11 +152,11 @@ class PersianExpirationDatePicker(
         persianDate.setDate(
             persianYear = year,
             persianMonth = month,
-            persianDay = if(month<=6) 31 else 30
+            persianDay = if (month <= 6) 31 else 30
         )
         selectedYear = year
         selectedMonth = month
-        selectedDay = if(month<=6) 31 else 30
+        selectedDay = if (month <= 6) 31 else 30
         minSelectableMonth = if (year == minYear) {
             minMonth
         } else {

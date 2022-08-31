@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val picker = PersianBirthDatePicker()
+        val picker = PersianExpirationDatePicker()
         setContent {
             PersianDatePickerTheme {
                 val modalBottomSheetState =
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 ModalBottomSheetLayout(
                     sheetContent = {
                         Box(modifier = Modifier.padding(top = 16.dp, bottom = 24.dp)) {
-                        picker.BirthDatePickerUI(
+                        picker.ExpirationDatePickerUI(
                             buttonTextStyle = MaterialTheme.typography.h3,
                             selectedTextStyle = MaterialTheme.typography.h3.copy(
                                 color = TextBlack,
