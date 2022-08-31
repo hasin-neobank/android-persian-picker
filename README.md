@@ -24,20 +24,42 @@ dependencies {
 
 ## Usage
 --------
-Create an instance from `PersianDatePicker` or `PersianAlphabetPicker` outside of composable function (the best place is ViewModel):
+Create an instance from `PersianBirthDatePicker`, `PersianExpirationDatePicker` or `PersianAlphabetPicker` outside of composable function (the best place is ViewModel):
 
 ```kotlin
-//date picker
-val picker = PersianDatePicker()
+//birth date picker
+val picker = PersianBirthDatePicker()
+```
+```kotlin
+//expiration date picker
+val picker = PersianExpirationDatePicker()
 ```
 ```kotlin
 //alphabet picker
 val picker = PersianAlphabetPicker()
 ```
-Set `picker.DatePickerUI` or `picker.AlphabetPickerUI` as content to `ModalBottomSheetLayout`:
+Set `picker.BirthDatePickerUI`, `picker.ExpirationDatePickerUI` or `picker.AlphabetPickerUI` as content to `ModalBottomSheetLayout`:
 
 ```kotlin
-picker.DatePickerUI(
+picker.BirthDatePickerUI(
+    buttonTextStyle = MaterialTheme.typography.h3,
+    selectedTextStyle = MaterialTheme.typography.h3.copy(
+        color = TextBlack,
+        fontWeight = FontWeight.Normal
+    ),
+    unSelectedTextStyle = MaterialTheme.typography.h3.copy(
+        color = TextMediumGray,
+        fontWeight = FontWeight.Normal
+    ),
+    buttonText = "تایید",
+    onButtonPressed = { date ->
+        result= "current persian date: ${date.persianYear}/${date.persianMonth}/${date.persianDay}"
+    },
+)
+```
+
+```kotlin
+picker.ExpirationDatePickerUI(
     buttonTextStyle = MaterialTheme.typography.h3,
     selectedTextStyle = MaterialTheme.typography.h3.copy(
         color = TextBlack,
@@ -67,12 +89,12 @@ picker.AlphabetPickerUI(
     ),
     buttonText = "تایید",
     onButtonPressed = { alphabet ->
-        result= "current persian date: $alphabet"
+        result= "current alphat: $alphabet"
     },
 )
 ```
 
-<img src="https://user-images.githubusercontent.com/67331684/182156346-47f02adb-b968-47db-bee7-5e0f96c80152.jpg" width="300"> <img src="https://user-images.githubusercontent.com/67331684/182156523-80404675-cb03-47f6-9a29-c06ec47cd4c4.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/67331684/182156346-47f02adb-b968-47db-bee7-5e0f96c80152.jpg" width="300"> <img src="https://user-images.githubusercontent.com/67331684/182156523-80404675-cb03-47f6-9a29-c06ec47cd4c4.jpg" width="300"> <img src="https://user-images.githubusercontent.com/67331684/187671562-317376de-1f49-4fcb-98b2-1a6236ae0ff4.png" width="300">
 
 **Note:** see [Example](app/src/main/java/com/example/picker/MainActivity.kt) for more detail.
 
