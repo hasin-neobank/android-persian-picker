@@ -94,7 +94,7 @@ picker.AlphabetPickerUI(
 )
 ```
 
-<img src="https://user-images.githubusercontent.com/67331684/182156346-47f02adb-b968-47db-bee7-5e0f96c80152.jpg" width="300"> <img src="https://user-images.githubusercontent.com/67331684/182156523-80404675-cb03-47f6-9a29-c06ec47cd4c4.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/67331684/182156346-47f02adb-b968-47db-bee7-5e0f96c80152.jpg" width="300"> <img src="https://user-images.githubusercontent.com/67331684/182156523-80404675-cb03-47f6-9a29-c06ec47cd4c4.jpg" width="300"> <img src="https://user-images.githubusercontent.com/67331684/187671562-317376de-1f49-4fcb-98b2-1a6236ae0ff4.png" width="300">
 
 **Note:** see [Example](app/src/main/java/com/example/picker/MainActivity.kt) for more detail.
 
