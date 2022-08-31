@@ -3,6 +3,7 @@ package com.example.picker.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,53 +18,42 @@ import com.example.picker.utils.bottomSheetSymbolRadius
 import com.example.picker.utils.bottomSheetSymbolWidth
 import com.example.picker.utils.inActiveInputBorderColor
 
-class PersianDatePicker(
+class PersianExpirationDatePicker(
     preSelectedMonth: Int = 0,
     preSelectedYear: Int = 0,
-    preSelectedDay: Int = 0,
     yearRange: Int = 100,
-    minAge: Int = 18,
 ) {
     private val persianDate: PersianPickerDate = PersianDateImpl()
-    private var minYear = persianDate.persianYear - (minAge) - yearRange
-    private val maxYear = persianDate.persianYear - (minAge)
-    private val maxMonth = persianDate.persianMonth
-    private val maxDay = persianDate.persianDay
+    private var minYear = persianDate.persianYear
+    private val maxYear = persianDate.persianYear + yearRange
+    private val minMonth = persianDate.persianMonth
     private var selectedYear by mutableStateOf(preSelectedYear)
     private var selectedMonth by mutableStateOf(preSelectedMonth)
-    var selectedDay by mutableStateOf(preSelectedDay)
-    var maxSelectableYear by mutableStateOf(maxYear)
-    var yearSelectableRange by
+    private var selectedDay by mutableStateOf(if(preSelectedMonth<=6) 31 else 30)
+    private var maxSelectableYear by mutableStateOf(maxYear)
+    private var yearSelectableRange by
     mutableStateOf((minYear..maxSelectableYear).toList())
 
-    var maxSelectableMonth by mutableStateOf(maxMonth)
-    var monthSelectableRange
-            by mutableStateOf((1..maxSelectableMonth).toList())
-
-    var maxSelectableDay by mutableStateOf(maxDay)
-    var daySelectableRange by
-    mutableStateOf((1..maxSelectableDay).toList())
-
+    private var minSelectableMonth by mutableStateOf(minMonth)
+    private var monthSelectableRange
+            by mutableStateOf((minSelectableMonth..12).toList())
     init {
         persianDate.setDate(
-            persianDate.persianYear - (minAge),
+            persianDate.persianYear,
             persianDate.persianMonth,
             persianDate.persianDay
         )
         if (selectedYear == 0) {
-            selectedYear = maxYear
+            selectedYear = minYear
         }
         if (selectedMonth == 0) {
-            selectedMonth = maxMonth
-        }
-        if (selectedDay == 0) {
-            selectedDay = maxDay
+            selectedMonth = minMonth
         }
     }
 
     //start UI code
     @Composable
-    fun DatePickerUI(
+    fun ExpirationDatePickerUI(
         buttonTextStyle: TextStyle,
         selectedTextStyle: TextStyle,
         unSelectedTextStyle: TextStyle,
@@ -72,20 +62,7 @@ class PersianDatePicker(
         selectorColor: Color = Color(0xFFECEEF1),
     ) {
 
-        val monthNames = listOf(
-            "فروردین",
-            "اردیبهشت",
-            "خرداد",
-            "تیر",
-            "مرداد",
-            "شهریور",
-            "مهر",
-            "آبان",
-            "آذر",
-            "دی",
-            "بهمن",
-            "اسفند"
-        )
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -112,10 +89,10 @@ class PersianDatePicker(
                         .height(48.dp)
 
                 )
-                Row() {
+                Row(verticalAlignment = Alignment.CenterVertically) {
 
                     Box(
-                        modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
+                        modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd,
                     )
                     {
                         ListItemPicker(
@@ -123,42 +100,33 @@ class PersianDatePicker(
                             value = selectedYear,
                             onValueChange = {
 
-                                onDateChanged(it, selectedMonth, selectedDay)
+                                onDateChanged(it, selectedMonth)
 
                             },
                             list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
                             unSelectedTextStyle = unSelectedTextStyle
                         )
                     }
-
                     Box(
-                        modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("/", style = selectedTextStyle)
+                    }
+                    Box(
+                        modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart,
                     )
                     {
                         ListItemPicker(
-                            label = { monthNames[it - 1] },
+                            label = {if(it<10)"0${it}" else it.toString()  },
                             value = selectedMonth,
                             onValueChange = {
-                                onDateChanged(selectedYear, it, selectedDay)
+                                onDateChanged(selectedYear, it)
                             },
                             list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
                             unSelectedTextStyle = unSelectedTextStyle
                         )
                     }
-                    Box(
-                        modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
-                    )
-                    {
-                        ListItemPicker(
-                            label = { it.toString() },
-                            value = selectedDay,
-                            onValueChange = {
-                                onDateChanged(selectedYear, selectedMonth, it)
-                            },
-                            list = daySelectableRange, selectedTextStyle = selectedTextStyle,
-                            unSelectedTextStyle = unSelectedTextStyle
-                        )
-                    }
+
 
                 }
 
@@ -176,36 +144,21 @@ class PersianDatePicker(
 
     private fun onDateChanged(
         year: Int,
-        month: Int,
-        day: Int
+        month: Int
     ) {
         persianDate.setDate(
             persianYear = year,
             persianMonth = month,
-            persianDay = day
+            persianDay = if(month<=6) 31 else 30
         )
         selectedYear = year
         selectedMonth = month
-        selectedDay = day
-        maxSelectableMonth = if (year == maxYear) {
-            maxMonth
+        selectedDay = if(month<=6) 31 else 30
+        minSelectableMonth = if (year == minYear) {
+            minMonth
         } else {
-            12
+            1
         }
-        monthSelectableRange = (1..maxSelectableMonth).toList()
-        maxSelectableDay = if (selectedYear == maxYear && month >= maxMonth) {
-            maxDay
-
-        } else if (persianDate.isLeapYear && month == 12) {
-            30
-        } else if (!persianDate.isLeapYear && month == 12) {
-            29
-        } else if (month <= 6) {
-            31
-        } else {
-            30
-        }
-        daySelectableRange = (1..maxSelectableDay).toList()
-
+        monthSelectableRange = (minSelectableMonth..12).toList()
     }
 }

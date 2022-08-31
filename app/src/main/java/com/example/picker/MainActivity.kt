@@ -14,9 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.picker.utils.*
-import com.example.picker.view.PersianDatePicker
+import com.example.picker.view.PersianBirthDatePicker
 import com.example.picker.ui.theme.PersianDatePickerTheme
 import com.example.picker.ui.theme.TextBlack
+import com.example.picker.view.PersianExpirationDatePicker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val picker = PersianDatePicker()
+        val picker = PersianBirthDatePicker()
         setContent {
             PersianDatePickerTheme {
                 val modalBottomSheetState =
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 ModalBottomSheetLayout(
                     sheetContent = {
                         Box(modifier = Modifier.padding(top = 16.dp, bottom = 24.dp)) {
-                        picker.DatePickerUI(
+                        picker.BirthDatePickerUI(
                             buttonTextStyle = MaterialTheme.typography.h3,
                             selectedTextStyle = MaterialTheme.typography.h3.copy(
                                 color = TextBlack,
