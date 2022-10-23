@@ -113,20 +113,17 @@ class PersianBirthDatePicker(
 
                 )
                 Row() {
-
                     Box(
                         modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
                     )
                     {
                         ListItemPicker(
                             label = { it.toString() },
-                            value = selectedYear,
+                            value = selectedDay,
                             onValueChange = {
-
-                                onDateChanged(it, selectedMonth, selectedDay)
-
+                                onDateChanged(selectedYear, selectedMonth, it)
                             },
-                            list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
+                            list = daySelectableRange, selectedTextStyle = selectedTextStyle,
                             unSelectedTextStyle = unSelectedTextStyle
                         )
                     }
@@ -145,20 +142,24 @@ class PersianBirthDatePicker(
                             unSelectedTextStyle = unSelectedTextStyle
                         )
                     }
+
                     Box(
                         modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
                     )
                     {
                         ListItemPicker(
                             label = { it.toString() },
-                            value = selectedDay,
+                            value = selectedYear,
                             onValueChange = {
-                                onDateChanged(selectedYear, selectedMonth, it)
+
+                                onDateChanged(it, selectedMonth, selectedDay)
+
                             },
-                            list = daySelectableRange, selectedTextStyle = selectedTextStyle,
+                            list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
                             unSelectedTextStyle = unSelectedTextStyle
                         )
                     }
+
 
                 }
 

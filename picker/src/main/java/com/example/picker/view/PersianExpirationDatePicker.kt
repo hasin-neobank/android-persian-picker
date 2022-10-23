@@ -9,7 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.picker.api.PersianPickerDate
 import com.example.picker.date.PersianDateImpl
@@ -63,7 +65,6 @@ class PersianExpirationDatePicker(
         selectorColor: Color = Color(0xFFECEEF1),
     ) {
 
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -91,20 +92,18 @@ class PersianExpirationDatePicker(
 
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
-
                     Box(
-                        modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd,
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = Alignment.CenterEnd,
                     )
                     {
                         ListItemPicker(
-                            label = { it.toString() },
-                            value = selectedYear,
+                            label = { if (it < 10) "0${it}" else it.toString() },
+                            value = selectedMonth,
                             onValueChange = {
-
-                                onDateChanged(it, selectedMonth)
-
+                                onDateChanged(selectedYear, it)
                             },
-                            list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
+                            list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
                             unSelectedTextStyle = unSelectedTextStyle
                         )
                     }
@@ -120,16 +119,17 @@ class PersianExpirationDatePicker(
                     )
                     {
                         ListItemPicker(
-                            label = { if (it < 10) "0${it}" else it.toString() },
-                            value = selectedMonth,
+                            label = { it.toString() },
+                            value = selectedYear,
                             onValueChange = {
-                                onDateChanged(selectedYear, it)
+
+                                onDateChanged(it, selectedMonth)
+
                             },
-                            list = monthSelectableRange, selectedTextStyle = selectedTextStyle,
+                            list = yearSelectableRange, selectedTextStyle = selectedTextStyle,
                             unSelectedTextStyle = unSelectedTextStyle
                         )
                     }
-
 
                 }
 
@@ -143,6 +143,7 @@ class PersianExpirationDatePicker(
                 verticalMargin = 0.0
             )
         }
+
     }
 
     private fun onDateChanged(
