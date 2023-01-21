@@ -32,6 +32,7 @@ class PersianAlphabetPicker(
         buttonText: String,
         onButtonPressed: (alphabet: String) -> Unit,
         selectorColor: Color = Color(0xFFECEEF1),
+        buttonBackgroundColor:Color =  Color(0xFF385473)
     ) {
 
         val alphabets = listOf(
@@ -123,7 +124,9 @@ class PersianAlphabetPicker(
                 text = buttonText,
                 onClick = { onButtonPressed(selectedAlphabet) },
                 enableContentStyle = buttonTextStyle,
-                verticalMargin = 0.0
+                verticalMargin = 0.0 ,
+                enableBorderColor = buttonBackgroundColor ,
+                enableBackgroundColor = buttonBackgroundColor
             )
         }
 

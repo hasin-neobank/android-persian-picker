@@ -4,14 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.picker.api.PersianPickerDate
 import com.example.picker.date.PersianDateImpl
@@ -63,6 +64,7 @@ class PersianExpirationDatePicker(
         buttonText: String,
         onButtonPressed: (persianDate: PersianPickerDate) -> Unit,
         selectorColor: Color = Color(0xFFECEEF1),
+        buttonBackgroundColor: Color = Color(0xFF385473)
     ) {
 
         Column(
@@ -140,7 +142,9 @@ class PersianExpirationDatePicker(
                 text = buttonText,
                 onClick = { onButtonPressed(persianDate) },
                 enableContentStyle = buttonTextStyle,
-                verticalMargin = 0.0
+                verticalMargin = 0.0,
+                enableBorderColor = buttonBackgroundColor,
+                enableBackgroundColor = buttonBackgroundColor
             )
         }
 

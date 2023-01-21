@@ -70,6 +70,7 @@ class PersianBirthDatePicker(
         buttonText: String,
         onButtonPressed: (persianDate: PersianPickerDate) -> Unit,
         selectorColor: Color = Color(0xFFECEEF1),
+        buttonBackgroundColor:Color =  Color(0xFF385473)
     ) {
 
         val monthNames = listOf(
@@ -170,7 +171,9 @@ class PersianBirthDatePicker(
                 text = buttonText,
                 onClick = { onButtonPressed(persianDate) },
                 enableContentStyle = buttonTextStyle,
-                verticalMargin = 0.0
+                verticalMargin = 0.0,
+                enableBorderColor = buttonBackgroundColor ,
+                enableBackgroundColor = buttonBackgroundColor
             )
         }
     }
