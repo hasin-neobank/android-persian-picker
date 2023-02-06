@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val picker = PersianBirthDatePicker()
+        val picker = PersianBirthDatePicker(minAge = 0)
         setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 PersianDatePickerTheme {
